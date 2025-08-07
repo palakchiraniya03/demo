@@ -1,98 +1,85 @@
-/* Base & Layout */
 body {
   font-family: Arial, sans-serif;
-  background: #f4f4f9;
-  color: #333;
+  background-color: #f7f9fc;
+  color: #000;
   margin: 0;
-  padding: 20px;
-  transition: background 0.3s, color 0.3s;
-}
-
-#darkToggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
+  padding: 0;
 }
 
 .container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.header {
   display: flex;
-  max-width: 1000px;
-  margin: 60px auto 0;
-  gap: 30px;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Left Panel */
-.left {
-  flex: 1;
+.search-section {
+  margin: 20px 0;
 }
 
-#topStocks {
+#stockInput {
+  padding: 10px;
+  font-size: 16px;
+  width: 70%;
+}
+
+#trackButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+#stockInfo {
+  background-color: #e0f7fa;
+  padding: 15px;
+  margin: 10px 0;
+  border-left: 5px solid #00796b;
+}
+
+#topStocksTable {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
 }
 
-#topStocks th, #topStocks td {
+#topStocksTable th,
+#topStocksTable td {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: left;
 }
 
-#topStocks th {
-  background: #eaeaea;
+#topStocksTable th {
+  background-color: #f0f0f0;
 }
 
-#stockInput, #trackBtn {
-  margin-top: 20px;
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Suggestions Dropdown */
-#suggestions {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border: 1px solid #ccc;
-  max-height: 120px;
-  overflow-y: auto;
-}
-
-#suggestions li {
-  padding: 8px;
+#darkModeToggle {
+  font-size: 24px;
   cursor: pointer;
+  background: transparent;
+  border: none;
 }
 
-#suggestions li:hover {
-  background: #ddd;
-}
-
-/* Right Panel */
-.right {
-  flex: 1;
-  padding: 10px;
-  background: #eef;
-  min-height: 200px;
-}
-
-/* Dark Mode */
 body.dark-mode {
-  background: #1c1c1e;
-  color: #eee;
+  background-color: #121212;
+  color: #fff;
 }
 
-body.dark-mode #topStocks th {
-  background: #444;
+body.dark-mode #stockInfo {
+  background-color: #2e3b4e;
+  border-left-color: #90caf9;
 }
 
-body.dark-mode #suggestions li:hover {
-  background: #555;
+body.dark-mode #topStocksTable th {
+  background-color: #2e3b4e;
 }
 
-body.dark-mode .right {
-  background: #333;
+body.dark-mode #topStocksTable td {
+  border-color: #555;
 }
