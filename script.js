@@ -2,98 +2,88 @@ const fakeStockInfo = {
   "SBI": {
     price: 805.15,
     volume: "3,955,677",
-    description: "State Bank of India is the country’s largest public sector bank.",
+    description: "State Bank of India is India’s largest public sector bank.",
+    sector: "Banking"
+  },
+  "HDFC": {
+    price: 1585.90,
+    volume: "2,123,987",
+    description: "HDFC Bank is one of India’s top private sector banks.",
     sector: "Banking"
   },
   "ITC": {
     price: 412.00,
     volume: "8,495,104",
-    description: "ITC Limited is a conglomerate with FMCG, cigarettes, and more.",
+    description: "ITC Limited is a diversified conglomerate with a strong FMCG business.",
     sector: "FMCG"
   },
   "TCS": {
-    price: 3830.10,
-    volume: "2,784,221",
-    description: "Tata Consultancy Services is a global IT services company.",
-    sector: "IT"
+    price: 3799.75,
+    volume: "1,623,450",
+    description: "Tata Consultancy Services is a global IT services giant.",
+    sector: "IT Services"
   },
-  "Reliance": {
-    price: 2765.20,
-    volume: "6,110,441",
-    description: "Reliance Industries is a conglomerate involved in energy, petrochemicals, textiles, etc.",
+  "RELIANCE": {
+    price: 2855.40,
+    volume: "6,234,909",
+    description: "Reliance Industries operates across energy, petrochemicals, and retail.",
     sector: "Conglomerate"
-  },
-  "Infosys": {
-    price: 1480.50,
-    volume: "3,251,110",
-    description: "Infosys is a global leader in next-gen digital services and consulting.",
-    sector: "IT"
-  },
-  "HDFC": {
-    price: 1580.00,
-    volume: "2,149,332",
-    description: "HDFC Bank is one of India’s leading private sector banks.",
-    sector: "Banking"
-  },
-  "ICICI": {
-    price: 1455.00,
-    volume: "3,500,000",
-    description: "ICICI Bank offers a wide range of banking products and services.",
-    sector: "Banking"
   }
 };
 
 const topStocks = [
-  { name: "Reliance", price: "2,765.20", change: "+0.75%", marketCap: "₹18.4L Cr" },
-  { name: "TCS", price: "3,830.10", change: "-0.42%", marketCap: "₹14.5L Cr" },
-  { name: "HDFC", price: "1,580.00", change: "+0.60%", marketCap: "₹11.2L Cr" },
-  { name: "Infosys", price: "1,480.50", change: "+0.13%", marketCap: "₹6L Cr" },
-  { name: "ICICI", price: "1,455.00", change: "+0.10%", marketCap: "₹10.5L Cr" }
+  { name: "SBI", price: 805.15, change: "+1.25%", marketCap: "₹7.2T" },
+  { name: "HDFC", price: 1585.90, change: "-0.75%", marketCap: "₹9.5T" },
+  { name: "ITC", price: 412.00, change: "+0.55%", marketCap: "₹5.1T" },
+  { name: "TCS", price: 3799.75, change: "+0.35%", marketCap: "₹13.4T" },
+  { name: "RELIANCE", price: 2855.40, change: "-0.15%", marketCap: "₹19.7T" }
 ];
 
-function renderTopStocksTable() {
-  const tbody = document.querySelector("#topStocksTable tbody");
-  tbody.innerHTML = "";
-  topStocks.forEach(stock => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${stock.name}</td>
-      <td>${stock.price}</td>
-      <td>${stock.change}</td>
-      <td>${stock.marketCap}</td>
+function trackStock() {
+  const stockInput = document.getElementById("stockInput").value.toUpperCase();
+  const stockData = fakeStockInfo[stockInput];
+
+  const stockInfoDiv = document.getElementById("stockInfo");
+  if (stockData) {
+    stockInfoDiv.innerHTML = `
+      <h3>${stockInput}</h3>
+      <p><strong>Price:</strong> ₹${stockData.price}</p>
+      <p><strong>Volume:</strong> ${stockData.volume}</p>
+      <p><strong>Sector:</strong> ${stockData.sector}</p>
+      <p><strong>Description:</strong> ${stockData.description}</p>
     `;
-    tbody.appendChild(row);
+  } else {
+    stockInfoDiv.innerHTML = `<p>Stock not found. Try SBI, HDFC, ITC, TCS, RELIANCE.</p>`;
+  }
+}
+
+function showSuggestions() {
+  const input = document.getElementById("stockInput").value.toUpperCase();
+  const suggestionsDiv = document.getElementById("suggestions");
+  const suggestions = Object.keys(fakeStockInfo).filter(stock => stock.startsWith(input));
+  suggestionsDiv.innerHTML = suggestions.join(", ");
+}
+
+function showTopStocks() {
+  const tbody = document.querySelector("#topStocks tbody");
+  tbody.innerHTML = '';
+  topStocks.forEach(stock => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${stock.name}</td>
+        <td>${stock.price}</td>
+        <td>${stock.change}</td>
+        <td>${stock.marketCap}</td>
+      </tr>
+    `;
   });
 }
 
-function showStockInfo() {
-  const input = document.getElementById("stockInput").value.toUpperCase();
-  const info = fakeStockInfo[input];
-  const display = document.getElementById("stockInfo");
-  if (info) {
-    display.innerHTML = `
-      <h3>${input}</h3>
-      <p><strong>Price:</strong> ₹${info.price}</p>
-      <p><strong>Volume:</strong> ${info.volume}</p>
-      <p><strong>Sector:</strong> ${info.sector}</p>
-      <p>${info.description}</p>
-    `;
-  } else {
-    display.innerHTML = "<p>Stock not found.</p>";
-  }
-}
-
-document.getElementById("trackButton").addEventListener("click", showStockInfo);
-document.getElementById("stockInput").addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    showStockInfo();
-  }
-});
-
+document.getElementById("stockInput").addEventListener("input", showSuggestions);
 document.getElementById("darkModeToggle").addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
 });
 
 window.onload = () => {
-  renderTopStocksTable();
+  showTopStocks();
 };
