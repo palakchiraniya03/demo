@@ -1,122 +1,68 @@
-const fakeStockInfo = {
-  "SBI": {
-    price: 805.15,
-    volume: "3,955,677",
-    description: "State Bank of India is the country’s largest public sector bank.",
-    sector: "Banking"
-  },
-  "ITC": {
-    price: 412.00,
-    volume: "8,495,104",
-    description: "ITC Limited is a conglomerate with FMCG, cigarettes, and more.",
-    sector: "Consumer Goods"
-  },
-  "Bajaj Finance": {
-    price: 876.65,
-    volume: "2,483,494",
-    description: "Bajaj Finance Ltd is a major NBFC in consumer and SME lending.",
-    sector: "Financial Services"
-  },
-  "Infosys": {
-    price: 1523.10,
-    volume: "5,340,901",
-    description: "Infosys is a global IT consulting and services company.",
-    sector: "Technology"
-  },
-  "Reliance": {
-    price: 2810.75,
-    volume: "6,754,000",
-    description: "Reliance Industries operates in petrochemicals, telecom, and retail.",
-    sector: "Conglomerate"
-  }
+const topStocks = [
+  { name: "Reliance", price: "1390.85", change: "-0.15%", marketCap: "₹43.5L Cr" },
+  { name: "TCS", price: "3032.30", change: "—", marketCap: "₹11L Cr" },
+  { name: "HDFC Bank", price: "1995.40", change: "+0.63%", marketCap: "₹15.5L Cr" },
+  { name: "Infosys", price: "1437.65", change: "+0.13%", marketCap: "₹6L Cr" },
+  { name: "ICICI Bank", price: "1444.75", change: "+0.03%", marketCap: "₹10.5L Cr" },
+];
+
+// Render table
+function showTopStocks() {
+  const tbody = document.querySelector("#topStocks tbody");
+  tbody.innerHTML = '';
+  topStocks.forEach(stock => {
+    tbody.innerHTML += `<tr>
+      <td>${stock.name}</td>
+      <td>${stock.price}</td>
+      <td>${stock.change}</td>
+      <td>${stock.marketCap}</td>
+    </tr>`;
+  });
+}
+
+// Dark mode toggle
+document.getElementById('darkToggle').onclick = () => {
+  document.body.classList.toggle('dark-mode');
 };
 
-window.onload = () => {
-  const stockInput = document.getElementById("stockInput");
-  const stockData = document.getElementById("stockData");
-  const suggestionBox = document.getElementById("suggestions");
+// Stock search & suggestions
+const stockInput = document.getElementById('stockInput');
+const suggestions = document.getElementById('suggestions');
+const stockInfo = document.getElementById('stockInfo');
 
-  function trackStock() {
-    const input = stockInput.value.trim().toLowerCase();
-    if (!input) {
-      stockData.innerHTML = "⚠️ Please enter a stock name.";
-      return;
-    }
-
-    const cleanedInput = input.replace(/[^a-z0-9]/gi, "");
-    let matched = null;
-
-    for (const name in fakeStockInfo) {
-      const cleanName = name.toLowerCase().replace(/[^a-z0-9]/gi, "");
-      if (cleanName.includes(cleanedInput)) {
-        matched = name;
-        break;
-      }
-    }
-
-    if (matched) {
-      const s = fakeStockInfo[matched];
-      stockData.innerHTML = `
-        <strong>📊 ${matched}</strong><br>
-        💵 Price: ₹${s.price}<br>
-        📦 Volume: ${s.volume}<br>
-        🏭 Sector: ${s.sector}<br>
-        📝 About: ${s.description}
-      `;
-    } else {
-      stockData.innerHTML = `❌ Sorry, "${input}" not found in database.`;
-    }
-
-    stockInput.value = "";
-    suggestionBox.innerHTML = "";
-  }
-
-  function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
-  }
-
-  function showSuggestions() {
-    const input = stockInput.value.trim().toLowerCase();
-    suggestionBox.innerHTML = "";
-
-    if (!input) return;
-
-    const matches = Object.keys(fakeStockInfo).filter(name =>
-      name.toLowerCase().includes(input)
-    );
-
-    matches.forEach(name => {
-      const li = document.createElement("li");
-      li.textContent = name;
+stockInput.addEventListener('input', () => {
+  suggestions.innerHTML = '';
+  const query = stockInput.value.toLowerCase();
+  if (!query) return;
+  topStocks.forEach(s => {
+    if (s.name.toLowerCase().includes(query)) {
+      const li = document.createElement('li');
+      li.textContent = s.name;
       li.onclick = () => {
-        stockInput.value = name;
-        suggestionBox.innerHTML = "";
-        trackStock();
+        stockInput.value = s.name;
+        suggestions.innerHTML = '';
+        showStock(s.name);
       };
-      suggestionBox.appendChild(li);
-    });
-  }
-
-  function displayAvailableStocks() {
-    const list = Object.keys(fakeStockInfo).join(', ');
-    document.getElementById("stockList").innerText = `📦 Available: ${list}`;
-  }
-
-  // Events
-  stockInput.addEventListener("keydown", e => {
-    if (e.key === "Enter") {
-      trackStock();
+      suggestions.append(li);
     }
   });
+});
 
-  stockInput.addEventListener("input", showSuggestions);
-  document.addEventListener("click", e => {
-    if (e.target !== stockInput) suggestionBox.innerHTML = "";
-  });
+document.getElementById('trackBtn').onclick = () => showStock(stockInput.value.trim());
 
-  // Expose functions
-  window.trackStock = trackStock;
-  window.toggleDarkMode = toggleDarkMode;
+function showStock(name) {
+  const s = topStocks.find(stock => stock.name.toLowerCase() === name.toLowerCase());
+  if (!s) {
+    stockInfo.innerHTML = `<p>Stock "${name}" not found.</p>`;
+    return;
+  }
+  stockInfo.innerHTML = `
+    <h3>${s.name}</h3>
+    <p><strong>Price:</strong> ₹${s.price}</p>
+    <p><strong>Change:</strong> ${s.change}</p>
+    <p><strong>Market Cap:</strong> ${s.marketCap}</p>
+  `;
+}
 
-  displayAvailableStocks();
-};
+// Initialize
+window.onload = showTopStocks;
