@@ -1,191 +1,98 @@
+/* Base & Layout */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f7f9fc;
-  color: #000;
+  background: #f4f4f9;
+  color: #333;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  transition: background-color 0.4s ease, color 0.4s ease;
-  position: relative;
+  padding: 20px;
+  transition: background 0.3s, color 0.3s;
 }
 
 #darkToggle {
-  font-size: 18px;
-  width: 36px;
-  height: 36px;
-  background-color: #e0e0e0;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: transparent;
   border: none;
-  border-radius: 50%;
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  font-size: 24px;
   cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-#darkToggle:hover {
-  transform: scale(1.1);
 }
 
 .container {
-  background: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 20px;
-  text-align: left;
-  max-width: 900px;
-  width: 90%;
+  max-width: 1000px;
+  margin: 60px auto 0;
+  gap: 30px;
 }
 
-.input-section {
+/* Left Panel */
+.left {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  max-width: 400px;
 }
 
-input, button {
+#topStocks {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#topStocks th, #topStocks td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+#topStocks th {
+  background: #eaeaea;
+}
+
+#stockInput, #trackBtn {
+  margin-top: 20px;
   padding: 10px;
   width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
+  box-sizing: border-box;
 }
 
-button {
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-.stock-data-box {
-  flex: 1;
-  min-width: 250px;
-  max-width: 500px;
-  background-color: #eef4ff;
-  padding: 15px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-
-.stock-list {
-  margin-top: 10px;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-/* Logo tweaks */
-.logo {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  border-radius: 50%;
-  margin-bottom: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border: 1px solid #000;
-  transition: transform 0.3s ease;
-}
-
-.logo:hover {
-  transform: scale(1.05) rotate(-2deg);
-}
-
-/* Suggestions dropdown */
+/* Suggestions Dropdown */
 #suggestions {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
-  margin-top: 5px;
+  margin: 0;
+  border: 1px solid #ccc;
   max-height: 120px;
   overflow-y: auto;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: white;
-  position: relative;
-  z-index: 10;
-  width: 90%;
 }
 
 #suggestions li {
-  padding: 10px;
+  padding: 8px;
   cursor: pointer;
 }
 
 #suggestions li:hover {
-  background-color: #f0f0f0;
+  background: #ddd;
 }
 
-/* Dark mode */
+/* Right Panel */
+.right {
+  flex: 1;
+  padding: 10px;
+  background: #eef;
+  min-height: 200px;
+}
+
+/* Dark Mode */
 body.dark-mode {
-  background-color: #121212;
-  color: #ffffff;
+  background: #1c1c1e;
+  color: #eee;
 }
 
-body.dark-mode #darkToggle {
-  background-color: #444;
-  color: #fff;
-}
-
-body.dark-mode .container {
-  background-color: #1e1e1e;
-}
-
-body.dark-mode input,
-body.dark-mode button {
-  background-color: #333;
-  color: #fff;
-  border-color: #555;
-}
-
-body.dark-mode button:hover {
-  background-color: #444;
-}
-
-body.dark-mode .stock-data-box {
-  background-color: #2c2c2c;
-  color: #fff;
-  border-color: #555;
-}
-
-body.dark-mode #suggestions {
-  background-color: #333;
-  color: white;
-  border-color: #555;
+body.dark-mode #topStocks th {
+  background: #444;
 }
 
 body.dark-mode #suggestions li:hover {
-  background-color: #444;
+  background: #555;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .container {
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-
-  input, button, .stock-data-box {
-    width: 100%;
-  }
-
-  #suggestions {
-    width: 100%;
-  }
+body.dark-mode .right {
+  background: #333;
 }
