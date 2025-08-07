@@ -1,116 +1,120 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f2f6fa;
-  color: #1c1c1c;
+  font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #f9f9f9;
+  color: #222;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.container {
-  max-width: 850px;
-  margin: 20px auto;
-  padding: 20px;
-}
-
-.header {
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #1e90ff;
+  padding: 10px 20px;
+  color: white;
 }
 
-.title-logo {
+.logo-title {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
+  margin: auto;
 }
 
 .logo {
-  height: 50px;
-}
-
-.search-section {
-  margin: 25px 0;
-}
-
-#stockInput {
-  padding: 10px;
-  font-size: 16px;
-  width: 65%;
-  border: 2px solid #2c3e50;
-  border-radius: 6px;
-}
-
-#trackButton {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #2c3e50;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-#stockInfo {
-  background-color: #d9eaf7;
-  padding: 15px;
-  margin-top: 15px;
-  border-left: 6px solid #34495e;
-  border-radius: 4px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
 }
 
 h1 {
-  color: #2c3e50;
-  font-size: 28px;
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
 }
 
-h2 {
-  margin-top: 40px;
-  color: #2c3e50;
+#darkModeToggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
 }
 
-#topStocksTable {
+.container {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+input[type="text"] {
+  padding: 10px;
+  width: 70%;
+  margin-right: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #1e90ff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#suggestions {
+  margin-top: 10px;
+  color: #1e90ff;
+  font-weight: bold;
+}
+
+#stockInfo {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-left: 5px solid #1e90ff;
+}
+
+table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-#topStocksTable th,
-#topStocksTable td {
-  border: 1px solid #ccc;
-  padding: 10px;
+th, td {
+  padding: 12px;
   text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
-#topStocksTable th {
-  background-color: #ecf0f1;
+.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
 }
 
-#darkModeToggle {
-  font-size: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
+.dark-mode #stockInfo {
+  background-color: #222;
+  border-left-color: #ffdd57;
 }
 
-body.dark-mode {
-  background-color: #1e1e1e;
-  color: #eee;
-}
-
-body.dark-mode #stockInfo {
+.dark-mode header {
   background-color: #333;
-  border-left-color: #3498db;
 }
 
-body.dark-mode #topStocksTable th {
-  background-color: #444;
-  color: #fff;
-}
-
-body.dark-mode #topStocksTable td {
+.dark-mode table {
   border-color: #555;
 }
 
-body.dark-mode #trackButton {
-  background-color: #2980b9;
+.dark-mode th, .dark-mode td {
+  border-bottom: 1px solid #555;
+}
+
+.dark-mode button, .dark-mode input[type="text"] {
+  background-color: #333;
+  color: white;
+  border: 1px solid #666;
 }
