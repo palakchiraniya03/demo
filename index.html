@@ -8,16 +8,16 @@
 </head>
 <body>
 
-  <!-- 🌙 Small dark mode toggle icon -->
+  <!-- 🌙 Dark Mode Toggle -->
   <button id="darkToggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
 
   <div class="container">
-    <h1>📈 Simple Stock Tracker 🚀</h1>
+    <h1>📈 Bull Up: Stock Tracker</h1>
 
     <div class="input-section">
       <img src="logo.png" alt="BullUp Logo" class="logo" />
-
-      <input type="text" id="stockInput" placeholder="Enter stock name (e.g., SBI, ITC, Bajaj Finance)" />
+      <input type="text" id="stockInput" placeholder="Search stock (e.g., SBI, ITC)" autocomplete="off" />
+      <ul id="suggestions"></ul>
       <button onclick="trackStock()">Track</button>
       <p id="stockList" class="stock-list"></p>
     </div>
