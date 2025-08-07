@@ -16,44 +16,55 @@ const fakeStockInfo = {
     volume: "2,483,494",
     description: "Bajaj Finance Ltd is a major NBFC in consumer and SME lending.",
     sector: "Financial Services"
+  },
+  "Infosys": {
+    price: 1523.10,
+    volume: "5,340,901",
+    description: "Infosys is a global IT consulting and services company.",
+    sector: "Technology"
+  },
+  "Reliance": {
+    price: 2810.75,
+    volume: "6,754,000",
+    description: "Reliance Industries operates in petrochemicals, telecom, and retail.",
+    sector: "Conglomerate"
   }
 };
 
 window.onload = () => {
   const stockInput = document.getElementById("stockInput");
+  const stockData = document.getElementById("stockData");
   const suggestionBox = document.getElementById("suggestions");
 
   function trackStock() {
-    const raw = stockInput.value.trim().toLowerCase();
-    const out = document.getElementById("stockData");
-
-    if (!raw) {
-      out.innerHTML = "⚠️ Please enter a stock name.";
+    const input = stockInput.value.trim().toLowerCase();
+    if (!input) {
+      stockData.innerHTML = "⚠️ Please enter a stock name.";
       return;
     }
 
-    let match = null;
-    const cleanInput = raw.replace(/[^a-z0-9]/gi, "");
+    const cleanedInput = input.replace(/[^a-z0-9]/gi, "");
+    let matched = null;
 
     for (const name in fakeStockInfo) {
-      const cleanname = name.toLowerCase().replace(/[^a-z0-9]/gi, "");
-      if (cleanname.includes(cleanInput)) {
-        match = name;
+      const cleanName = name.toLowerCase().replace(/[^a-z0-9]/gi, "");
+      if (cleanName.includes(cleanedInput)) {
+        matched = name;
         break;
       }
     }
 
-    if (match) {
-      const s = fakeStockInfo[match];
-      out.innerHTML = 
-        📊 <strong>${match}</strong><br>
+    if (matched) {
+      const s = fakeStockInfo[matched];
+      stockData.innerHTML = `
+        <strong>📊 ${matched}</strong><br>
         💵 Price: ₹${s.price}<br>
         📦 Volume: ${s.volume}<br>
         🏭 Sector: ${s.sector}<br>
         📝 About: ${s.description}
-      ;
+      `;
     } else {
-      out.innerHTML = ❌ Sorry, "${raw}" not found in database.;
+      stockData.innerHTML = `❌ Sorry, "${input}" not found in database.`;
     }
 
     stockInput.value = "";
@@ -64,18 +75,7 @@ window.onload = () => {
     document.body.classList.toggle("dark-mode");
   }
 
-  function displayAvailableStocks() {
-    document.getElementById("stockList").innerText =
-      📦 Available: ${Object.keys(fakeStockInfo).join(', ')};
-  }
-
-  stockInput.addEventListener("keydown", (e) => {
-    if (e.key.toLowerCase() === "enter") {
-      trackStock();
-    }
-  });
-
-  stockInput.addEventListener("input", () => {
+  function showSuggestions() {
     const input = stockInput.value.trim().toLowerCase();
     suggestionBox.innerHTML = "";
 
@@ -95,16 +95,28 @@ window.onload = () => {
       };
       suggestionBox.appendChild(li);
     });
-  });
+  }
 
-  document.addEventListener("click", (e) => {
-    if (e.target !== stockInput) {
-      suggestionBox.innerHTML = "";
+  function displayAvailableStocks() {
+    const list = Object.keys(fakeStockInfo).join(', ');
+    document.getElementById("stockList").innerText = `📦 Available: ${list}`;
+  }
+
+  // Events
+  stockInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+      trackStock();
     }
   });
 
-  displayAvailableStocks();
+  stockInput.addEventListener("input", showSuggestions);
+  document.addEventListener("click", e => {
+    if (e.target !== stockInput) suggestionBox.innerHTML = "";
+  });
+
+  // Expose functions
   window.trackStock = trackStock;
   window.toggleDarkMode = toggleDarkMode;
-};
 
+  displayAvailableStocks();
+};
