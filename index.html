@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bull Up</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 🌙 Small dark mode toggle icon -->
+  <button id="darkToggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
+
+  <div class="container">
+    <h1>📈 Simple Stock Tracker 🚀</h1>
+
+    <div class="input-section">
+      <img src="logo.png" alt="BullUp Logo" class="logo" />
+
+      <input type="text" id="stockInput" placeholder="Enter stock name (e.g., SBI, ITC, Bajaj Finance)" />
+      <button onclick="trackStock()">Track</button>
+      <p id="stockList" class="stock-list"></p>
+    </div>
+
+    <div id="stockData" class="stock-data-box"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
